@@ -9,15 +9,15 @@ exports.crearCita = async (req, res) => {
 
   try {
     if (
-      paciente.trim() === "" ||
-      sintomas.trim() === "" ||
-      personal.trim() === "" ||
+      paciente === "" ||
+      sintomas === "" ||
+      personal === "" ||
       fechaCita === ""
     ) {
       res.status(500).send({ msg: "Información no valida" });
     }
 
-    const cita = new Cita(req.body);
+    const cita = await new Cita(req.body);
 
     cita.creador = req.usuario.id;
 
@@ -33,8 +33,6 @@ exports.crearCita = async (req, res) => {
 exports.obtenerCitas = async (req, res) => {
   try {
     const citas = await Cita.find({ creador: req.usuario.id });
-
-    console.log(citas);
 
     res.json({ citas });
   } catch (error) {
@@ -74,7 +72,7 @@ exports.eliminarCita = async (req, res) => {
   try {
     const cita = await Cita.findById(id);
 
-    console.log(cita)
+    console.log(cita);
 
     if (!cita) {
       res.status(400).send({ msg: "La cita no existe" });
@@ -86,8 +84,7 @@ exports.eliminarCita = async (req, res) => {
 
     await Cita.findByIdAndDelete(id);
 
-
-    res.json({msg:"Eliminado Correactamente"})
+    res.json({ msg: "Eliminado Correactamente" });
   } catch (error) {
     console.log(error);
     res.status(500).send({ msg: "Error en el servidor" });

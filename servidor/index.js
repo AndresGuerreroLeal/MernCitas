@@ -18,7 +18,7 @@ app.use("/api/citas", require("./routes/citas"));
 
 
 //Puerto
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 3001;
 
 //Ejecución
 app.listen(PORT, () => {
